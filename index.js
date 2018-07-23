@@ -88,8 +88,8 @@ var handlers = {
            //var myRequest = String(theNumber);  
            //var myRequest = parseInt(theNumber);
            console.log('value:', theNumber); // Print the user value
-           const url = 'http://ft-everkool82.oraclecloud2.dreamfactory.com/api/v2/demo31OST/_table/akash_ticket/?fields=status_id&api_key=30ee4b81b5435f37a6673717ef639cdc92a03ecc1090d95e76b9e78991928254&filter=number='+theNumber;
-            //const url = 'http://ft-everkool82.oraclecloud2.dreamfactory.com/api/v2/demo31OST/_table/akash_ticket?&format-json&filter=number='+myRequest+'&api_key=30ee4b81b5435f37a6673717ef639cdc92a03ecc1090d95e76b9e78991928254';
+           //const url = 'http://ft-everkool82.oraclecloud2.dreamfactory.com/api/v2/demo31OST/_table/akash_ticket/?fields=status_id&api_key=30ee4b81b5435f37a6673717ef639cdc92a03ecc1090d95e76b9e78991928254&filter=number='+theNumber;
+            const url = 'http://ft-everkool82.oraclecloud2.dreamfactory.com/api/v2/demo31OST/_table/akash_ticket?&format-json&filter=number='+theNumber+'&api_key=30ee4b81b5435f37a6673717ef639cdc92a03ecc1090d95e76b9e78991928254';
             console.log('url:', url);
             // const url = `http://ft-everkool82.oraclecloud2.dreamfactory.com/api/v2/demo31OST/_table/akash_ticket/${myRequest}?&format-json&api_key=30ee4b81b5435f37a6673717ef639cdc92a03ecc1090d95e76b9e78991928254`;
                 request.get(url, (error, response, body) => {
@@ -102,25 +102,24 @@ var handlers = {
                     const ticket = theFact.resource[0].number; 
                     const speechOutput = theFact.resource[0].status_id;
                     
-                     if (speechOutput == 1) {
-                     this.response.speak("Your Ticket number "+`${ticket}`+" Opened");
-                     this.emit(':responseReady');
-                 } else if (speechOutput == 2) {
-                     this.response.speak("Your Ticket number "+`${ticket}`+" Resolved");
-                     this.emit(':responseReady');
-                 } else if (speechOutput == 3) {
-                     this.response.speak("Your Ticket number "+`${ticket}`+" Closed");
-                     this.emit(':responseReady');
-                 }    
-                 else if (speechOutput == 4) {
-                    this.response.speak("Your Ticket number "+`${ticket}`+" Archived");
-                    this.emit(':responseReady');
-                } 
-                else if (speechOutput == 5) {
-                    this.response.speak("Your Ticket number "+`${ticket}`+" Deleted");
-                    this.emit(':responseReady');
-                }
-                    
+                    if (speechOutput == 1) {
+                        this.response.speak("Your Ticket number "+`${ticket}`+" with ticket status, Opened");
+                        this.emit(':responseReady');
+                    } else if (speechOutput == 2) {
+                        this.response.speak("Your Ticket number "+`${ticket}`+" with ticket status, Resolved");
+                        this.emit(':responseReady');
+                    } else if (speechOutput == 3) {
+                        this.response.speak("Your Ticket number "+`${ticket}`+" with ticket status, Closed");
+                        this.emit(':responseReady');
+                    }    
+                    else if (speechOutput == 4) {
+                       this.response.speak("Your Ticket number "+`${ticket}`+" with ticket status, Archived");
+                       this.emit(':responseReady');
+                   } 
+                   else if (speechOutput == 5) {
+                       this.response.speak("Your Ticket number "+`${ticket}`+" with ticket status, Deleted");
+                       this.emit(':responseReady');
+                   }  
                     
                 //this.response.cardRenderer(SKILL_NAME, theFact);
                     //this.response.speak(speechOutput + " Would you like another ticket?").listen("Would you like another ticket?");
@@ -225,21 +224,21 @@ var handlers = {
                  const ticket = theFact.resource[0].number;
                  
                  if (speechOutput == 1) {
-                    this.response.speak("Your Ticket number "+`${ticket}`+" Opened");
+                    this.response.speak("Your Ticket number "+`${ticket}`+" with ticket status, Opened");
                     this.emit(':responseReady');
                 } else if (speechOutput == 2) {
-                    this.response.speak("Your Ticket number "+`${ticket}`+" Resolved");
+                    this.response.speak("Your Ticket number "+`${ticket}`+" with ticket status, Resolved");
                     this.emit(':responseReady');
                 } else if (speechOutput == 3) {
-                    this.response.speak("Your Ticket number "+`${ticket}`+" Closed");
+                    this.response.speak("Your Ticket number "+`${ticket}`+" with ticket status, Closed");
                     this.emit(':responseReady');
                 }    
                 else if (speechOutput == 4) {
-                   this.response.speak("Your Ticket number "+`${ticket}`+" Archived");
+                   this.response.speak("Your Ticket number "+`${ticket}`+" with ticket status, Archived");
                    this.emit(':responseReady');
                } 
                else if (speechOutput == 5) {
-                   this.response.speak("Your Ticket number "+`${ticket}`+" Deleted");
+                   this.response.speak("Your Ticket number "+`${ticket}`+" with ticket status, Deleted");
                    this.emit(':responseReady');
                }
                 
