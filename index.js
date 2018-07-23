@@ -73,10 +73,17 @@ var handlers = {
             });
     },
     'GetNumberIntent': function () {
+
+        //const ticket = 2;
+        //const theNumber = 299740;
         const theNumber = this.event.request.intent.slots.getNumber.value;
-            var myRequest = theNumber.toString();
-            const url = `http://ft-everkool82.oraclecloud2.dreamfactory.com/api/v2/demo31OST/_table/akash_ticket?&format-json&filter=number=${myRequest}&api_key=30ee4b81b5435f37a6673717ef639cdc92a03ecc1090d95e76b9e78991928254`;
-           // const url = `http://ft-everkool82.oraclecloud2.dreamfactory.com/api/v2/demo31OST/_table/akash_ticket/${myRequest}?&format-json&api_key=30ee4b81b5435f37a6673717ef639cdc92a03ecc1090d95e76b9e78991928254`;
+           //var myRequest = String(theNumber);  
+           //var myRequest = parseInt(theNumber);
+           console.log('value:', theNumber); // Print the user value
+           const url = 'http://ft-everkool82.oraclecloud2.dreamfactory.com/api/v2/demo31OST/_table/akash_ticket/?fields=status_id&api_key=30ee4b81b5435f37a6673717ef639cdc92a03ecc1090d95e76b9e78991928254&filter=number='+theNumber;
+            //const url = 'http://ft-everkool82.oraclecloud2.dreamfactory.com/api/v2/demo31OST/_table/akash_ticket?&format-json&filter=number='+myRequest+'&api_key=30ee4b81b5435f37a6673717ef639cdc92a03ecc1090d95e76b9e78991928254';
+            console.log('url:', url);
+            // const url = `http://ft-everkool82.oraclecloud2.dreamfactory.com/api/v2/demo31OST/_table/akash_ticket/${myRequest}?&format-json&api_key=30ee4b81b5435f37a6673717ef639cdc92a03ecc1090d95e76b9e78991928254`;
                 request.get(url, (error, response, body) => {
                    let json = JSON.parse(body);
                     console.log('error:', error); // Print the error if one occurred
@@ -84,7 +91,8 @@ var handlers = {
                     console.log('body:', body); // Print the body
         
                     const theFact = json;   
-                    const speechOutput = `${theFact.status_id}`;
+                    const speechOutput = theFact.resource[0].status_id;
+                    /*
                     if (speechOutput == 1) {
                         this.response.speak(speechOutput + " opened");
                         this.emit(':responseReady');
@@ -96,9 +104,10 @@ var handlers = {
                         this.emit(':responseReady');
                     }       
                     
-                // this.response.cardRenderer(SKILL_NAME, theFact);
-                    //this.response.speak(speechOutput + " Would you like another ticket?").listen("Would you like another ticket?");
-                   // this.emit(':responseReady');
+                    */
+                //this.response.cardRenderer(SKILL_NAME, theFact);
+                    this.response.speak(speechOutput + " Would you like another ticket?").listen("Would you like another ticket?");
+                    this.emit(':responseReady');
                 });
            
     },
