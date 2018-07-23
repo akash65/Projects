@@ -57,15 +57,23 @@ var handlers = {
                 const speechOutput = "Ticket number "+`${theFact.number}`+" has status "+`${theFact.status_id}`;
                 /*
                 if (speechOutput == 1) {
-                    this.response.speak(speechOutput + " opened");
+                     this.response.speak("Your Ticket number "+`${theFact.number}`+" Opened");
+                     this.emit(':responseReady');
+                 } else if (speechOutput == 2) {
+                     this.response.speak("Your Ticket number "+`${theFact.number}`+" Resolved");
+                     this.emit(':responseReady');
+                 } else if (speechOutput == 3) {
+                     this.response.speak("Your Ticket number "+`${theFact.number}`+" Closed");
+                     this.emit(':responseReady');
+                 }    
+                 else if (speechOutput == 4) {
+                    this.response.speak("Your Ticket number "+`${theFact.number}`+" Archived");
                     this.emit(':responseReady');
-                } else if (speechOutput == 2) {
-                    this.response.speak(speechOutput + " closed");
+                } 
+                else if (speechOutput == 5) {
+                    this.response.speak("Your Ticket number "+`${theFact.number}`+" Deleted");
                     this.emit(':responseReady');
-                } else if (speechOutput == 3) {
-                    this.response.speak(speechOutput + " responded");
-                    this.emit(':responseReady');
-                }  
+                }   
                 */
                // this.response.cardRenderer(SKILL_NAME, theFact);
                 this.response.speak(speechOutput + " Would you like another ticket?").listen("Would you like another ticket?");
@@ -90,24 +98,33 @@ var handlers = {
                     console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
                     console.log('body:', body); // Print the body
         
-                    const theFact = json;   
+                    const theFact = json;  
+                    const ticket = theFact.resource[0].number; 
                     const speechOutput = theFact.resource[0].status_id;
-                    /*
-                    if (speechOutput == 1) {
-                        this.response.speak(speechOutput + " opened");
-                        this.emit(':responseReady');
-                    } else if (speechOutput == 2) {
-                        this.response.speak(speechOutput + " closed");
-                        this.emit(':responseReady');
-                    } else if (speechOutput == 3) {
-                        this.response.speak(speechOutput + " responded");
-                        this.emit(':responseReady');
-                    }       
                     
-                    */
-                //this.response.cardRenderer(SKILL_NAME, theFact);
-                    this.response.speak(speechOutput + " Would you like another ticket?").listen("Would you like another ticket?");
+                     if (speechOutput == 1) {
+                     this.response.speak("Your Ticket number "+`${ticket}`+" Opened");
+                     this.emit(':responseReady');
+                 } else if (speechOutput == 2) {
+                     this.response.speak("Your Ticket number "+`${ticket}`+" Resolved");
+                     this.emit(':responseReady');
+                 } else if (speechOutput == 3) {
+                     this.response.speak("Your Ticket number "+`${ticket}`+" Closed");
+                     this.emit(':responseReady');
+                 }    
+                 else if (speechOutput == 4) {
+                    this.response.speak("Your Ticket number "+`${ticket}`+" Archived");
                     this.emit(':responseReady');
+                } 
+                else if (speechOutput == 5) {
+                    this.response.speak("Your Ticket number "+`${ticket}`+" Deleted");
+                    this.emit(':responseReady');
+                }
+                    
+                    
+                //this.response.cardRenderer(SKILL_NAME, theFact);
+                    //this.response.speak(speechOutput + " Would you like another ticket?").listen("Would you like another ticket?");
+                    //this.emit(':responseReady');
                 });
            
     },
@@ -139,13 +156,24 @@ var handlers = {
               var result = JSON.parse(returnData);
 
         /*
-              if (`${result.status_id}` === 1) {
-                self.response.speak(` ${result.status_id} `+ " opened");
-            } else if (`${result.status_id}` === 2) {
-                self.response.speak(` ${result.status_id} `+ " ");
-            } else if (`${result.status_id}` === 3) {
-                self.response.speak(` ${result.status_id} `+ " opened");
-            }
+              if (speechOutput == 1) {
+                     this.response.speak("Your Ticket number "+`${theFact.number}`+" Opened");
+                     this.emit(':responseReady');
+                 } else if (speechOutput == 2) {
+                     this.response.speak("Your Ticket number "+`${theFact.number}`+" Resolved");
+                     this.emit(':responseReady');
+                 } else if (speechOutput == 3) {
+                     this.response.speak("Your Ticket number "+`${theFact.number}`+" Closed");
+                     this.emit(':responseReady');
+                 }    
+                 else if (speechOutput == 4) {
+                    this.response.speak("Your Ticket number "+`${theFact.number}`+" Archived");
+                    this.emit(':responseReady');
+                } 
+                else if (speechOutput == 5) {
+                    this.response.speak("Your Ticket number "+`${theFact.number}`+" Deleted");
+                    this.emit(':responseReady');
+                }
             */
            //callback(result);
               self.response.speak(` ${result.number} `+ " Would you like another ticket?").listen("Would you like another ticket?");;
@@ -180,34 +208,46 @@ var handlers = {
 
     'GetNumber': function () {
 
-                 var mythis = this;
-                var mydata = mythis.event.request.intent.slots.theNumber.value;
-                var myRequest = parseInt(mydata);
-                //this.response.speak('number is ' + mydata)
-                //this.emit(':responseReady');
-                //let speechOutput;
-                //var mydata=3;
-                //console.log('mydata:', mydata);
-                var responseString = '';
-                //https.get('**YOURURL**?**yourparameters**&mydata=' + mydata, (res) => {
-                http.get('http://ft-everkool82.oraclecloud2.dreamfactory.com/api/v2/demo31OST/_table/akash_ticket/'+myRequest+'?&api_key=30ee4b81b5435f37a6673717ef639cdc92a03ecc1090d95e76b9e78991928254'+mydata, (res) => {
-                console.log('statusCode:', res.statusCode);
-                console.log('headers:', res.headers);
-
-                res.on('data', d => {
-                    responseString += d;
-                });
-
-                res.on('end', () => {
-                    var data = JSON.parse(responseString);
-                    mythis.response.speak(` ${data.number} `);
-                    mythis.emit(`${data.number}`);
-                });
-                }).on('error', (e) => {
-                console.error(e);
-                });
-
-               
+        const theNumber = this.event.request.intent.slots.theNumber.value;
+        console.log('value:', theNumber); // Print the user value
+        //const url = 'http://ft-everkool82.oraclecloud2.dreamfactory.com/api/v2/demo31OST/_table/akash_ticket/?fields=status_id&api_key=30ee4b81b5435f37a6673717ef639cdc92a03ecc1090d95e76b9e78991928254&filter=number='+theNumber;
+        const url = 'http://ft-everkool82.oraclecloud2.dreamfactory.com/api/v2/demo31OST/_table/akash_ticket?&format-json&filter=number='+theNumber+'&api_key=30ee4b81b5435f37a6673717ef639cdc92a03ecc1090d95e76b9e78991928254';
+         console.log('url:', url);
+         // const url = `http://ft-everkool82.oraclecloud2.dreamfactory.com/api/v2/demo31OST/_table/akash_ticket/${myRequest}?&format-json&api_key=30ee4b81b5435f37a6673717ef639cdc92a03ecc1090d95e76b9e78991928254`;
+             request.get(url, (error, response, body) => {
+                let json = JSON.parse(body);
+                 console.log('error:', error); // Print the error if one occurred
+                 console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+                 console.log('body:', body); // Print the body
+     
+                 const theFact = json;   
+                 const speechOutput = theFact.resource[0].status_id;
+                 const ticket = theFact.resource[0].number;
+                 
+                 if (speechOutput == 1) {
+                    this.response.speak("Your Ticket number "+`${ticket}`+" Opened");
+                    this.emit(':responseReady');
+                } else if (speechOutput == 2) {
+                    this.response.speak("Your Ticket number "+`${ticket}`+" Resolved");
+                    this.emit(':responseReady');
+                } else if (speechOutput == 3) {
+                    this.response.speak("Your Ticket number "+`${ticket}`+" Closed");
+                    this.emit(':responseReady');
+                }    
+                else if (speechOutput == 4) {
+                   this.response.speak("Your Ticket number "+`${ticket}`+" Archived");
+                   this.emit(':responseReady');
+               } 
+               else if (speechOutput == 5) {
+                   this.response.speak("Your Ticket number "+`${ticket}`+" Deleted");
+                   this.emit(':responseReady');
+               }
+                
+             //this.response.cardRenderer(SKILL_NAME, theFact);
+                this.response.speak(speechOutput + " Would you like another ticket?").listen("Would you like another ticket?");
+                 this.emit(':responseReady');
+             });
+        
 },
 
 /*
