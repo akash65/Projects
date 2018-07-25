@@ -24,7 +24,7 @@ var handlers = {
         //ask="Welcome to Team. What would you like to know?";
         //reprompt= "What would you like to know?";
         //this.emit(':ask', ask, reprompt);
-        this.emit('SayHello');
+        this.emit('GetNumber');
     },
     'Unhandled' : function() {
         this.response.speak("Sorry, I didn't get that. You can try: 'alexa, hello world'" +
